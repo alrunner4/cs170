@@ -1,0 +1,31 @@
+# Macros ========================================
+
+CC=gcc
+CFLAGS=-c -Wall -Wextra -Werror -ansi -pedantic -O2
+DIR=gnu/
+OBJECTS=$(DIR)main.o $(DIR)jumble.o $(DIR)scantext.o $(DIR)spellcheck.o
+EXE=program.exe
+
+# Targets ========================================
+
+$(DIR)$(EXE) : $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(DIR)$(EXE)
+
+$(DIR)main.o : main.c jumble.h scantext.h spellcheck.h
+	$(CC) $(CFLAGS) main.c -o $(DIR)main.o
+
+$(DIR)jumble.o : jumble.c jumble.h
+	$(CC) $(CFLAGS) jumble.c -o $(DIR)jumble.o
+
+$(DIR)scantext.o : scantext.c scantext.h
+	$(CC) $(CFLAGS) scantext.c -o $(DIR)scantext.o
+
+$(DIR)spellcheck.o : spellcheck.c spellcheck.h
+	$(CC) $(CFLAGS) spellcheck.c -o $(DIR)spellcheck.o
+
+clean :
+	rm $(DIR)$(EXE) $(OBJECTS)
+  
+rebuild : 
+	$(MAKE) clean
+	$(MAKE)

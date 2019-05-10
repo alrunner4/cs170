@@ -1,0 +1,31 @@
+# Macros ========================================
+
+CC=cl
+CFLAGS=/c /W3 /nologo /Za /WX /D_CRT_SECURE_NO_WARNINGS
+DIR=ms/
+OBJECTS=$(DIR)main.obj $(DIR)jumble.obj $(DIR)scantext.obj $(DIR)spellcheck.obj
+EXE=program.exe
+
+# Targets ========================================
+
+$(DIR)$(EXE) : $(OBJECTS)
+	$(CC) $(OBJECTS) /Fe$(DIR)$(EXE)
+
+$(DIR)main.obj : main.c jumble.h scantext.h spellcheck.h
+	$(CC) $(CFLAGS) main.c /Fo$(DIR)main.obj
+
+$(DIR)jumble.obj : jumble.c jumble.h
+	$(CC) $(CFLAGS) jumble.c /Fo$(DIR)jumble.obj
+
+$(DIR)scantext.obj : scantext.c scantext.h
+	$(CC) $(CFLAGS) scantext.c /Fo$(DIR)scantext.obj
+
+$(DIR)spellcheck.obj : spellcheck.c spellcheck.h
+	$(CC) $(CFLAGS) spellcheck.c /Fo$(DIR)spellcheck.obj
+
+clean :
+	rm $(DIR)$(EXE) $(OBJECTS)
+  
+rebuild : 
+	$(MAKE) clean
+	$(MAKE)
