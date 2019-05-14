@@ -1,0 +1,27 @@
+GCC=g++
+GCCFLAGS=-Wall -Wextra -ansi -pedantic -O -Wconversion -Werror -g
+
+OBJECTS0=Ocean.cpp PRNG.cpp
+DRIVER0=driver.cpp
+
+VALGRIND_OPTIONS=-q --leak-check=full
+DIFF_OPTIONS=-y --strip-trailing-cr --suppress-common-lines -b
+
+OSTYPE := $(shell uname)
+ifeq ($(OSTYPE),Linux)
+CYGWIN=
+else
+CYGWIN=-Wl,--enable-auto-import
+endif
+
+gcc64:
+	g++ -o $(PRG) $(CYGWIN) $(DRIVER0) $(OBJECTS0) $(GCCFLAGS)
+clang64:
+	clang++ -o $(PRG) $(CYGWIN) $(DRIVER0) $(OBJECTS0) $(GCCFLAGS)
+0:
+	#echo "running test$@"
+	#@echo "should run in less than 200 ms"
+	#watchdog 200 ./$(PRG) input.txt >studentout$@
+	#diff output$@.txt studentout$@ $(DIFF_OPTIONS) > difference$@
+clean : 
+	rm *.exe student* difference*
