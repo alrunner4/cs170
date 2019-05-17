@@ -1,11 +1,16 @@
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="new.css"> 
-	<title>Classes 1</title>
-</head>
+<html> <head> <link rel="stylesheet" type="text/css" href="new.css"> 
+<title>Classes 1</title> </head>
 
 <body>  
 <center><h1>Classes and Objects</h1></center>
+
+<!--
+<blockquote>
+<i>
+"The road to hell is paved with global variables"</i> -- Steve McConnell
+</blockquote>
+-->
+
 
 <!-- ************************************************************************************************ -->
 <!-- ************************************************************************************************ -->
@@ -1492,3 +1497,920 @@ jim.display();
 </pre></blockquote>
 
 <br><br>
+
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader">The <tt>this</tt> Pointer
+</p>
+
+All methods of a class/struct are passed a hidden parameter. This parameter is the address of the 
+invoking object. In other words, the address of the object that you are calling a method on:
+
+<blockquote><pre>
+john.display(); <font color="#003399"><i>// john is the invoking object</i></font>
+jane.display(); <font color="#003399"><i>// jane is the invoking object</i></font>
+jim.display();  <font color="#003399"><i>// jim is the invoking object</i></font>
+</pre></blockquote>
+
+Really, the <i>display</i> method is more like this (with the items in <font color="blue"><b>blue</b></font> hidden):
+
+<blockquote><pre>
+<b>void</b> Student::display(<font color="blue"><b>Student *this</b></font>)
+{
+  <b>using</b> std::cout;
+  <b>using</b> std::endl;
+
+    <font color="#003399"><i>// Members are offset from &quot;this&quot;</i></font>
+  cout &lt;&lt; <font color="#9933CC">&quot;login: &quot;</font> &lt;&lt; <font color="blue"><b>this-&gt;</b></font>login_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  age: &quot;</font> &lt;&lt; <font color="blue"><b>this-&gt;</b></font>age_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot; year: &quot;</font> &lt;&lt; <font color="blue"><b>this-&gt;</b></font>year_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  GPA: &quot;</font> &lt;&lt; <font color="blue"><b>this-&gt;</b></font>GPA_ &lt;&lt; endl;
+}
+</pre></blockquote>
+
+The <a href="#STUDENT_DIAGRAM">example above</a> would look something like this after compiling:
+<blockquote><pre>
+display(&amp;john); <font color="#003399"><i>// Address of <b>john</b> object passed to display: display(100)</i></font>
+display(&amp;jane); <font color="#003399"><i>// Address of <b>jane</b> object passed to display: display(200)</i></font>
+display(&amp;jim);  <font color="#003399"><i>// Address of <b>jim</b> object passed to display: display(300)</i></font>
+</pre></blockquote>
+
+So, in a nutshell, this (no pun intended) is how the magic works. The programmer has access to the <tt><b>this</b></tt> pointer
+inside of the methods. (<tt><b>this</b></tt> is a keyword.) 
+<p>
+Both of these lines are the same within <i>Student::display</i>:
+
+<blockquote><pre>
+  <font color="#003399"><i>// Normal code</i></font>	
+cout &lt;&lt; <font color="#9933CC">&quot;login: &quot;</font> &lt;&lt; login_ &lt;&lt; endl;
+
+  <font color="#003399"><i>// Explicit use of this. (Generally only seen in beginner's code.)</i></font>	
+  <font color="#003399"><i>// But is required in certain more advanced C++ code.</i></font>	
+cout &lt;&lt; <font color="#9933CC">&quot;login: &quot;</font> &lt;&lt; <b>this</b>-&gt;login_ &lt;&lt; endl;
+</pre></blockquote>
+
+
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader"><tt>const</tt> Member Functions
+</p>
+
+In the "olden days", we would make our parameters <b>const</b> if we were not going to modify them
+in the global functions.
+Assume that all data is public in the <b>Student</b> structure:
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>void</b> display_student(<b>const</b> Student &amp;student)
+{
+  <b>using</b> std::cout;
+  <b>using</b> std::endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;login: &quot;</font> &lt;&lt; student.login &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  age: &quot;</font> &lt;&lt; student.age &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot; year: &quot;</font> &lt;&lt; student.year &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  GPA: &quot;</font> &lt;&lt; student.GPA &lt;&lt; endl;
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+<b>void</b> foo()
+{
+    <font color="#003399"><i>// Create constant object</i></font>
+  <b>const</b> Student john = {<font color="#9933CC">&quot;jdoe&quot;</font>, 20, 3, 3.10f};
+
+    <font color="#003399"><i>// This works just fine with const object</i></font>
+  display_student(john);
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+<b>Question:</b> How do we accomplish the same thing with private data and public member functions (methods) when we don't pass the data as a parameter?<br>
+<p>
+
+There is no "parameter" to mark as <b>const</b>:
+<p>
+
+<blockquote><pre>
+<b>void</b> Student::display()
+{
+  <b>using</b> std::cout;
+  <b>using</b> std::endl;
+
+  cout &lt;&lt; <font color="#9933CC">&quot;login: &quot;</font> &lt;&lt; login_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  age: &quot;</font> &lt;&lt; age_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot; year: &quot;</font> &lt;&lt; year_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  GPA: &quot;</font> &lt;&lt; GPA_ &lt;&lt; endl;
+}
+</pre></blockquote>
+
+
+Remember, if you marked a parameter using the <b>const</b> keyword, you were promising/advertising
+that you will not change it. Otherwise, you were promising that you were going to change it.
+<p>
+How does the user know what the <i>display</i> method is going to do?
+<p>
+
+<blockquote><pre>
+<b>void</b> Student::display(); <font color="#003399"><i>// Prototype. Will this change anything? </i></font>
+</pre></blockquote>
+
+Unless you specify the behavior, <b>ALL</b> member functions (methods) are assumed to
+change the data of the object:
+
+<blockquote><pre>
+<b>void</b> foo()
+{
+    <font color="#003399"><i>// Create a constant object (can't change any data later) </i></font>
+  <b>const</b> Student john(<font color="#9933CC">&quot;jdoe&quot;</font>, 20, 3, 3.10f);
+
+  john.set_age(25); <font color="#003399"><i>// Error writing <b>age_</b>, as expected.</i></font>
+  john.set_year(3); <font color="#003399"><i>// Error writing <b>year_</b>, as expected.</i></font>
+
+  john.get_age();   <font color="#003399"><i>// Error reading <b>age_</b>, NOT expected.</i></font>
+  john.display();   <font color="#003399"><i>// Error printing data, NOT expected.</i></font>
+}
+</pre></blockquote>
+
+
+<b>Answer:</b> We mark the method as <b>const</b>.
+<p>
+
+
+	
+You must tag both the declaration (in the class definition) and implementation with the <tt><b><font color="blue">const</font></b></tt> keyword:
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>struct</b> Student           
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Constructor</i></font>
+    Student(<b>const</b> <b>char</b> * login, <b>int</b> age, 
+            <b>int</b> year, <b>float</b> GPA);
+
+      <font color="#003399"><i>// Destructor</i></font>
+    ~Student();
+
+      <font color="#003399"><i>// Mutators (settors/writing) are non-const</i></font>
+    <b>void</b> set_login(<b>const</b> <b>char</b>* login);
+    <b>void</b> set_age(<b>int</b> age);
+    <b>void</b> set_year(<b>int</b> year);
+    <b>void</b> set_GPA(<b>float</b> GPA);
+
+      <font color="#003399"><i>// Accessor (gettors/reading) are const</i></font>
+    <b>int</b> get_age() <b><font color="blue">const</font></b>;
+    <b>int</b> get_year() <b><font color="blue">const</font></b>;
+    <b>float</b> get_GPA() <b><font color="blue">const</font></b>;
+    <b>const</b> <b>char</b> *get_login() <b><font color="blue">const</font></b>;
+
+      <font color="#003399"><i>// Nothing will be modified </i></font>
+    <b>void</b> display() <b><font color="blue">const</font></b>;
+
+  <b>private</b>:
+    <b>char</b> *login_; 
+    <b>int</b> age_;
+    <b>int</b> year_;
+    <b>float</b> GPA_;
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+<b>void</b> Student::display() <b><font color="blue">const</font></b>
+{
+  <b>using</b> std::cout;
+  <b>using</b> std::endl;
+
+  cout &lt;&lt; <font color="#9933CC">&quot;login: &quot;</font> &lt;&lt; login_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  age: &quot;</font> &lt;&lt; age_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot; year: &quot;</font> &lt;&lt; year_ &lt;&lt; endl;
+  cout &lt;&lt; <font color="#9933CC">&quot;  GPA: &quot;</font> &lt;&lt; GPA_ &lt;&lt; endl;
+}
+
+<b>int</b> Student::get_age() <b><font color="blue">const</font></b>
+{
+  <b>return</b> age_;
+}
+
+<b>int</b> Student::get_year() <b><font color="blue">const</font></b>
+{
+  <b>return</b> year_;
+}
+
+<b>float</b> Student::get_GPA() <b><font color="blue">const</font></b>
+{
+  <b>return</b> GPA_;
+}
+
+<b>const</b> <b>char</b> *Student::get_login() <b><font color="blue">const</font></b>
+{
+  <b>return</b> login_;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+<p>
+	
+Now, this <i>works</i> as expected:
+
+<blockquote><pre>
+<b>void</b> foo()
+{
+    <font color="#003399"><i>// Create a constant object </i></font>
+  <b>const</b> Student john(<font color="#9933CC">&quot;jdoe&quot;</font>, 20, 3, 3.10f);
+
+  john.set_age(25); <font color="#003399"><i>// Error, as expected.</i></font>
+  john.set_year(3); <font color="#003399"><i>// Error, as expected.</i></font>
+
+  john.get_age();   <font color="#003399"><i>// Ok, as expected.</i></font>
+  john.display();   <font color="#003399"><i>// Ok, as expected.</i></font>
+}
+</pre></blockquote>
+
+<p class="technote">
+<b>Note:</b> If a method does not modify the private data members, it should be marked as <tt><b>const</b></tt>. This
+will save you lots of time and headaches in the future. Unfortunately, the compiler won't remind you to do this
+until you try and use the method on a constant object.
+</p>
+
+
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader">Separating the Interface from the Implementation
+</p>
+
+Typically, each class will reside in its own file. In fact, most classes will generally be in two files:
+<ul>
+<li>The header file - contains the class defininition, usually in a <tt>.h</tt> file.
+<li>The implementation file - contains all of the methods (in a <tt>.cpp</tt>) that are declared in the class file.
+</ul>
+
+Here's our simple project split into three files:
+<ol>
+<li>The header file, <a href="Student.h.html">Student.h</a>
+<li>The implementation file, <a href="Student.cpp.html">Student.cpp</a>
+<li>The client code, <a href="main.cpp.html">main.cpp</a>
+</ol>
+
+We could then build <tt><b>project</b></tt> something like this:
+
+<blockquote><pre>
+g++ -o project main.cpp Student.cpp -Wall -Wextra -ansi -pedantic
+</pre></blockquote>
+
+
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader">Default Constructors
+</p>
+
+Recall one of the reasons for a constructor:
+<blockquote>
+"To ensure that an object's data is not left undefined."
+</blockquote>
+<p>
+
+This means that to construct an object, a class <i>absolutely, positively
+must have a constructor</i>. If there is no constructor, you cannot create
+an object (<i>instance</i>) from the class. This neatly solves the first problem above.
+<p>
+
+First, constructors:
+<p>
+
+Here's an example:
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>struct</b> Point
+{
+  <b>double</b> x;
+  <b>double</b> y;
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+<b>void</b> foo()
+{
+    <font color="#003399"><i>// Create a Point object</i></font>
+    <font color="#003399"><i>// x/y are uninitialized</i></font>
+  Point pt1;
+
+    <font color="#003399"><i>// Display random values for x/y</i></font>
+  std::cout &lt;&lt; pt1.x &lt;&lt; <font color="#9933CC">&quot;,&quot;</font> &lt;&lt; pt1.y &lt;&lt; std::endl;
+}
+
+<b>Output: (random)</b>
+1.89121e-307,1.89121e-307
+</pre></blockquote>
+</td>
+</tr></table>
+
+Of course, the client could have initialized the data, but you can't count on that.
+(Remember, you don't want to count on programmer to do the right thing!) Even though you
+can't see it, there is a constructor that is present so that we can construct the
+(apparently undefined) object.
+
+<br><br>
+<p>
+ The solution is to create
+a <i>default constructor</i>. A default constructor is simply a constructor that can be called without any
+arguments.
+
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Add default constructor</th><th>Implement the default constructor</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>struct</b> Point
+{
+    <font color="#003399"><i>// Default constructor</i></font>
+  Point();
+
+  <b>double</b> x;
+  <b>double</b> y;
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Point::Point()
+{
+    <font color="#003399"><i>// Give default values</i></font>
+  x = 0;
+  y = 0;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+Now, this object will be defined:
+
+<blockquote><pre>
+  <font color="#003399"><i>// Create a Point object</i></font>
+  <font color="#003399"><i>// x/y are defined now</i></font>
+Point pt1;
+
+  <font color="#003399"><i>// Display values for x/y</i></font>
+std::cout &lt;&lt; pt1.x &lt;&lt; <font color="#9933CC">&quot;,&quot;</font> &lt;&lt; pt1.y &lt;&lt; std::endl;
+
+<b>Output: (defined values)</b>
+0,0
+</pre></blockquote>
+
+It is not uncommon to provide other constructors in addition to a default constructor. (The example below uses the
+<b>class</b> keyword instead of <b>struct</b> just to demonstrate the technique works for both.)
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Multiple constructors</th><th>Implementations</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>class</b> Point
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Default constructor</i></font>
+    Point();
+
+      <font color="#003399"><i>// Non-default constructor</i></font>
+    Point(<b>double</b> x, <b>double</b> y);
+
+      <font color="#003399"><i>// For convenience</i></font>
+    <b>void</b> display() <b>const</b>;
+
+  <b>private</b>:
+    <b>double</b> x_;
+    <b>double</b> y_;
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Point::Point()
+{
+    <font color="#003399"><i>// Give default values</i></font>
+  x_ = 0.0;
+  y_ = 0.0;
+}
+
+Point::Point(<b>double</b> x, <b>double</b> y)
+{
+    <font color="#003399"><i>// Give values from params</i></font>
+  x_ = x;
+  y_ = y;
+}
+
+<b>void</b> Point::display() <b>const</b>
+{
+    <font color="#003399"><i>// Display random values for x/y</i></font>
+  std::cout &lt;&lt; x_ &lt;&lt; <font color="#9933CC">&quot;,&quot;</font> &lt;&lt; y_ &lt;&lt; std::endl;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+Now the user can construct "default" objects or specify the values:
+
+<blockquote><pre>
+  <font color="#003399"><i>// Both are accepted</i></font>
+Point pt1; 
+Point pt2(3.5, 7);
+
+pt1.display();  <font color="#003399"><i>// 0,0</i></font>
+pt2.display();  <font color="#003399"><i>// 3.5,7</i></font>
+</pre></blockquote>
+
+
+Note that we can combine the default constructor into a non-default constructor by using default arguments:
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>class</b> Point
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Default constructor</i></font>
+    Point(<b>double</b> x = 0.0, <b>double</b> y = 0.0);
+
+    <font color="#003399"><i>// Other stuff ...</i></font>
+
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Point::Point(<b>double</b> x, <b>double</b> y)
+{
+    <font color="#003399"><i>// Use params to set values</i></font>
+  x_ = x;
+  y_ = y;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+Also, realize that this is now ambiguous:
+
+<blockquote><pre>
+  <font color="#003399"><i>// Two default constructors (illegal)</i></font>	
+Point();
+Point(<b>double</b> x = 0.0, <b>double</b> y = 0.0);
+
+Point pt1; <font color="#003399"><i>// Which one?</i></font>
+</pre></blockquote>
+
+
+Notes:
+<li>The only way to construct an object from a class/struct is with a constructor (either default or non-default).
+<li>If you don't provide a constructor, the <b>compiler will provide a default constructor for you</b>.
+<li>Here's what we get from the compiler (sort of) if we don't provide any constructors for the Point class:
+
+<blockquote><pre>
+Point::Point()
+{
+}
+</pre></blockquote>
+
+<li>Unfortunately, this compiler-provided default constructor doesn't do much. 
+<li>The compiler will provide a default constructor <b>ONLY</b> if you don't provide any constructors at all.
+	<li>Put another way, if you provide <b>ANY</b> constructors (default or otherwise) the compiler
+		<b>WILL NOT</b> provide a default for you.
+</ul>
+
+</ul>
+
+Adding a default constructor to the <tt>Student</tt> class:
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>struct</b> Student           
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Default constructor</i></font>
+    Student();
+
+      <font color="#003399"><i>// Constructor</i></font>
+    Student(<b>const</b> <b>char</b> * login, <b>int</b> age, 
+            <b>int</b> year, <b>double</b> GPA);
+
+      <font color="#003399"><i>// Other public stuff ...</i></font>
+
+  <b>private</b>:
+    <b>char</b> *login_; 
+    <b>int</b> age_;
+    <b>int</b> year_;
+    <b>double</b> GPA_;
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+<font color="#003399"><i>// Default constructor (not really a good idea here)</i></font>
+Student::Student()
+{
+  login_ = 0;
+  set_login(<font color="#9933CC">&quot;Noname&quot;</font>);
+  set_age(18);
+  set_year(1);
+  set_GPA(0.0);
+}
+
+<font color="#003399"><i>// Constructor</i></font>
+Student::Student(<b>const</b> <b>char</b> * login, <b>int</b> age, 
+                 <b>int</b> year, <b>double</b> GPA)
+{
+  login_ = 0;
+  set_login(login);
+  set_age(age);
+  set_year(year);
+  set_GPA(GPA);
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+Of course, it's up to you (the class implementor) to decide if something has a "sane" default or must be
+provided by the user. A <tt>Student</tt> class really shouldn't provide a default as there are no
+"sane" defaults.
+
+
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader">Default Destructors
+</p>
+
+Recall one of the reasons for a destructor:
+<blockquote>
+"To ensure that any resources (e.g. memory) acquired are released."
+</blockquote>
+<p>
+Just like constructors, the compiler will provide a destructor for us if we fail to do so. Here's what
+the compiler will generate (sort of) if we don't provide a destructor for the <tt>Point</tt> class or
+the <tt>Student</tt> class:
+<p>
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+Point::~Point()
+{
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Student::~Student()
+{
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+<ul>
+<li>Like the compiler-generated constructor, these destructors don't do anything useful. 
+<li>For the <tt>Point</tt> class, this is sufficient since there is nothing to "clean up".
+<li>The <tt>Student</tt> class is different because it dynamically allocates memory for the <tt>login_</tt> member:
+<blockquote><pre>
+<b>void</b> Student::set_login(<b>const</b> <b>char</b>* login)
+{
+  <b>delete</b> [] login_;
+  
+  <b>int</b> len = std::strlen(login);
+  login_ = <b>new</b> <b>char</b>[len + 1]; <font color="#003399"><i>// Dynamic memory allocation, need to delete at some point</i></font>
+  std::strcpy(login_, login);
+}
+</pre></blockquote>
+<li>We need a better destructor, which we created:
+	
+
+
+<blockquote><pre>
+Student::~Student()
+{
+    <font color="#003399"><i>// Since <b>our</b> class allocated the memory,</i></font>
+    <font color="#003399"><i>// <b>our</b> class must release the memory.</i></font>
+  <b>delete</b> [] login_;
+}
+</pre></blockquote>
+</ul>
+
+Example using constructors, destructors, static allocation, and dynamic allocation:
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>class</b> Point
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Default constructor</i></font>
+    Point(<b>double</b> x = 0.0, <b>double</b> y = 0.0);
+
+      <font color="#003399"><i>// Destructor</i></font>
+    ~Point();
+
+      <font color="#003399"><i>// For convenience</i></font>
+    <b>void</b> display() <b>const</b>;
+
+  <b>private</b>:
+    <b>double</b> x_;
+    <b>double</b> y_;
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Point::~Point()
+{
+  std::cout &lt;&lt; <font color="#9933CC">&quot;Point destructor: &quot;</font>
+            &lt;&lt; x_ &lt;&lt; <font color="#9933CC">&quot;,&quot;</font> &lt;&lt; y_
+            &lt;&lt; std::endl;
+}
+
+Point::Point(<b>double</b> x, <b>double</b> y)
+{
+    <font color="#003399"><i>// Assign from the parameters</i></font>
+  x_ = x;
+  y_ = y;
+  std::cout &lt;&lt; <font color="#9933CC">&quot;Point constructor: &quot;</font>
+            &lt;&lt; x_ &lt;&lt; <font color="#9933CC">&quot;,&quot;</font> &lt;&lt; y_
+            &lt;&lt; std::endl;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Program</th><th>Output</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>void</b> foo()
+{
+    <font color="#003399"><i>// Static allocation</i></font>
+  Point pt1;       <font color="#003399"><i>// 0,0</i></font>
+  Point pt2(4);    <font color="#003399"><i>// 4,0</i></font>
+  Point pt3(4, 5); <font color="#003399"><i>// 4,5</i></font>
+
+    <font color="#003399"><i>// Similar using dynamic allocation</i></font>
+  Point *pt4 = <b>new</b> Point;
+  Point *pt5 = <b>new</b> Point(8);
+  Point *pt6 = <b>new</b> Point(7, 9);
+
+    <font color="#003399"><i>// Must delete manually (calls destructor)</i></font>
+  <b>delete</b> pt4;
+  <b>delete</b> pt5;
+  <b>delete</b> pt6;
+
+}  <font color="#003399"><i>// Destructors for pt1,pt2,pt3 called here (notice the ordering)</i></font>
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Point constructor: 0,0
+Point constructor: 4,0
+Point constructor: 4,5
+Point constructor: 0,0
+Point constructor: 8,0
+Point constructor: 7,9
+Point destructor: 0,0
+Point destructor: 8,0
+Point destructor: 7,9
+Point destructor: 4,5
+Point destructor: 4,0
+Point destructor: 0,0
+</pre></blockquote>
+</td>
+</tr></table>
+
+
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader">Arrays of Objects
+</p>
+
+Just like any other type, you can create arrays of objects.
+
+<ul>
+<li>You can initialize the array with an initializer list.
+<li>If the size of the array is larger than the number of initializers, the compiler will initialize
+	the remaining elements by calling the default constructor.
+<li>This means that unless you initialize each element individually, the class must have a default constructor.
+<li>If a class does not have a default constructor, you cannot create an array without initializers.
+</ul>
+<p>
+
+Built-in types:
+<blockquote><pre>
+  <font color="#003399"><i>// Compiler initializers elements that you don't</i></font>
+<b>int</b> a[3] = {1, 2, 3}; <font color="#003399"><i>// 1, 2, 3</i></font>
+<b>int</b> b[3] = {1, 2};    <font color="#003399"><i>// 1, 2, 0</i></font>
+<b>int</b> c[3] = {0}        <font color="#003399"><i>// 0, 0, 0</i></font>
+<b>double</b> d[3] = {1.0}   <font color="#003399"><i>// 1.0, 0.0, 0.0</i></font>
+</pre></blockquote>
+
+
+User-defined types:
+<p>
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+  <font color="#003399"><i>// Requires default constructor</i></font>
+Student st1[2];
+<b>for</b> (<b>int</b> i = 0; i &lt; 2; i++)
+  st1[i].display();
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+login: Noname
+  age: 18
+ year: 1
+  GPA: 0
+login: Noname
+  age: 18
+ year: 1
+  GPA: 0
+</pre></blockquote>
+</td>
+</tr></table>
+
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+  <font color="#003399"><i>// Requires default constructor</i></font>
+Student st2[3] = {
+                    Student(<font color="#9933CC">&quot;jdoe&quot;</font>, 20, 3, 3.10F), 
+                    Student(<font color="#9933CC">&quot;jsmith&quot;</font>, 19, 2, 3.95F)
+                  };
+<b>for</b> (<b>int</b> i = 0; i &lt; 3; i++)
+  st2[i].display();
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+login: jdoe
+  age: 20
+ year: 3
+  GPA: 3.1
+login: jsmith
+  age: 19
+ year: 2
+  GPA: 3.95
+login: Noname
+  age: 18
+ year: 1
+  GPA: 0
+</pre></blockquote>
+</td>
+</tr></table>
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+  <font color="#003399"><i>// No default constructor required</i></font>
+Student st3[2] = {
+                    Student(<font color="#9933CC">&quot;jdoe&quot;</font>, 20, 3, 3.10F), 
+                    Student(<font color="#9933CC">&quot;jsmith&quot;</font>, 19, 2, 3.95F)
+                  };
+<b>for</b> (<b>int</b> i = 0; i &lt; 2; i++)
+  st3[i].display();
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+login: jdoe
+  age: 20
+ year: 3
+  GPA: 3.1
+login: jsmith
+  age: 19
+ year: 2
+  GPA: 3.95
+</pre></blockquote>
+</td>
+</tr></table>
+
+<blockquote>
+<p class="technote">
+If the <tt>Student</tt> class does not have a default constructor, then the first two examples above would 
+cause a compiler error. This is something that you must understand completely.
+</p>
+</blockquote>
+
+	<p>
+<hr width="90%">
+<p>
+
+<b>Understanding the Big Picture&trade;</b>
+<p>
+What problems are solved by 
+
+<ol>
+<li>encapsulation?
+<li>access specifiers? (e.g. private)
+<li>constructors? 
+<li>default constructors?
+<li>destructors?
+<li>const member functions?
+</ol>
+</p>
+<br><br>
+
+
+
+<!--
+structs and classes - encapsulation (data and functions together)
+Can protect struct/class members with private keyword
+what problems are solved by:
+Constructors 
+Destructors
+const member functions
+
+-->
+
+<blockquote><pre>
+</pre></blockquote>
+
+<blockquote><pre>
+</pre></blockquote>
+
+<blockquote><pre>
+</pre></blockquote>
+
+
+</body>
+</html>
+
+<blockquote><pre>
+</pre></blockquote>
+
+
+
+
+<blockquote>
+<table border=0 cellspacing=5 cellpadding=0>
+<tr><th></th><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+</pre></blockquote>
+</td>
+</tr></table>
+</blockquote>
+
+<tt><b></b></tt>
+
+<blockquote>
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th></th><th></th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+</pre></blockquote>
+</td>
+</tr></table>
+</blockquote>
+
+<blockquote><pre>
+</pre></blockquote>
+
+

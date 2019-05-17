@@ -1,0 +1,706 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="new.css">
+<title>Classes Part 3</title>
+</head>
+
+<body>  
+<center><h1>Classes - Part 3</h1></center>
+
+<!--
+<blockquote>
+<i>
+"The road to hell is paved with global variables"</i> -- Steve McConnell
+</blockquote>
+-->
+
+
+<!-- ************************************************************************************************ -->
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader">Default Class Behavior
+</p>
+
+We've been assigning <tt>StopWatch</tt> objects and initializing them without any regards to how this is done:
+
+<blockquote><pre>
+  <font color="#003399"><i>// Construction (conversion constructor)</i></font>
+StopWatch sw1(60);   <font color="#003399"><i>// 00:01:00</i></font>
+  
+  <font color="#003399"><i>// Initialization</i></font>
+StopWatch sw2 = sw1; <font color="#003399"><i>// 00:01:00</i></font>
+
+  <font color="#003399"><i>// Construction (default constructor)</i></font>
+StopWatch sw3; <font color="#003399"><i>// 00:00:00</i></font>
+
+  <font color="#003399"><i>// Assignment: sw3.operator=(sw1);</i></font>
+  <font color="#003399"><i>// Where did this operator come from?</i></font>
+sw3 = sw1;  <font color="#003399"><i>// 00:01:00</i></font>
+</pre></blockquote>
+
+The compiler made it for us.
+<ul>
+<li>Like the default constructor and destructor, the compiler provides a default copy assignment operator
+<li>And like the default constructor/destructor, the default copy assignment operator is very basic.
+<li>It works the way the assignment operator works in C for <b>structs</b>, by doing a <i>memberwise</i> assignment of the data.
+	
+<blockquote><pre>
+<b>struct</b> Foo
+{
+  <b>int</b> a, b, c;
+};
+
+Foo f1 = {1, 2, 3}; <font color="#003399"><i>// initialization</i></font>
+Foo f2 = f1;        <font color="#003399"><i>// initialization</i></font>
+Foo f3;             <font color="#003399"><i>// uninitialized</i></font>
+f3 = f1;            <font color="#003399"><i>// assignment</i></font>
+</pre></blockquote>
+
+<li>If we could see what the compiler generates for the copy assignment operator, it would look something like this:
+	
+<blockquote><pre>
+Foo&amp; Foo::<b>operator</b>=(<b>const</b> Foo&amp; rhs)
+{
+  a = rhs.a;
+  b = rhs.b;
+  c = rhs.c;
+
+  <b>return</b> *<b>this</b>; <font color="#003399"><i>// Allows chaining: f1 = f2 = f3 etc...</i></font>
+}
+</pre></blockquote>
+
+So these mean the same thing:
+
+<blockquote><pre>
+  <font color="#003399"><i>// Infix notation</i></font>
+f3 = f1;
+
+  <font color="#003399"><i>// Functional notation</i></font>
+f3.<b>operator</b>=(f1);
+</pre></blockquote>
+
+
+
+</ul>
+
+For some classes, the default copy assignment operator is sufficient. (It is fine for the <tt>Foo</tt> class and the <tt>StopWatch</tt> class.)
+<p>
+In addition to the default copy assignment operator, the compiler will also provide a default <i>copy constructor</i>. (Once again, another
+function will be called to help the compiler perform its job.)
+<ul>
+<li>Anytime a copy of an object needs to be made, the copy constructor is called.</li>
+<li>The default copy constructor is provided by the compiler which just does a memberwise
+  copy from the right hand side to the left hand side of the operator.</li>
+<li>If the default is insufficient, you can write your own (just like the default constructor, 
+  destructor, and copy assignment operator).</li>
+<li>The copy constructor is also a one-argument constructor.</li>
+<li>This is what it might look like if we could see the compiler-generated function:
+	
+<blockquote><pre>
+Foo::Foo(<b>const</b> Foo&amp; rhs) : a(rhs.a), b(rhs.b), c(rhs.c)
+{
+}
+</pre></blockquote>
+
+<!--
+  a = rhs.a;
+  b = rhs.b;
+  c = rhs.c;
+-->
+
+<li>Anytime you call the constructor with <b>an object of the same type</b>, the copy constructor is used:
+		
+<blockquote><pre>
+Foo f1;     <font color="#003399"><i>// default constructor</i></font>
+Foo f2(f1); <font color="#003399"><i>// copy constructor</i></font>
+</pre></blockquote>
+
+<li>There are 2 other major situations where this happens "silently":
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Pass by value</th><th>Return by value</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>void</b> SomeFn1(Foo foo)
+{
+  <font color="#003399"><i>// do something with foo...</i></font>
+}
+
+<b>void</b> f3()
+{
+  Foo f1;
+  SomeFn1(f1); <font color="#003399"><i>// pass by value</i></font>
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Foo SomeFn2()
+{
+  Foo f;
+  <b>return</b> f; <font color="#003399"><i>// return by value</i></font>
+}
+
+<b>void</b> f4()
+{
+  Foo f1 = SomeFn2();
+}
+</pre></blockquote>
+</td>
+</tr></table>
+	
+</ul>	
+	
+At this point in the discussion there are four methods that the compiler will provide defaults for. (No visible C++ code is actually generated)
+
+<p>
+	
+<!--
+<table border=1 cellspacing=5 cellpadding=5>
+<tr><th>Default constructor</th><th>Default destructor</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+Foo::Foo()
+{
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Foo::~Foo()
+{
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+<p>
+	
+<table border=1 cellspacing=5 cellpadding=5>
+<tr><th>Default assignment operator</th><th>Default copy constructor</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+Foo&amp; Foo::<b>operator</b>=(<b>const</b> Foo&amp; rhs)
+{
+  a = rhs.a;
+  b = rhs.b;
+  c = rhs.c;
+  <b>return</b> *<b>this</b>;
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Foo::Foo(<b>const</b> Foo&amp; rhs)
+{
+  a = rhs.a;
+  b = rhs.b;
+  c = rhs.c;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+-->
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr align="center"><th>Default constructor<br>(does nothing)</th><th>Default destructor<br>(does nothing)</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+Foo::Foo()
+{
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Foo::~Foo()
+{
+}
+
+</pre></blockquote>
+</td>
+
+<tr align="center"><th>Default copy assignment operator<br>(memberwise assignment)</th><th>Default copy constructor<br>(memberwise initialization)</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+Foo&amp; Foo::<b>operator</b>=(<b>const</b> Foo&amp; rhs)
+{
+  a = rhs.a;
+  b = rhs.b;
+  c = rhs.c;
+
+  <b>return</b> *<b>this</b>;
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Foo::Foo(<b>const</b> Foo&amp; rhs) : a(rhs.a), b(rhs.b), c(rhs.c)
+{
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+
+For simple classes and structs, these methods are sufficient. Where might it not be sufficient?
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Class definition</th><th>Some implementations</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>class</b> Student           
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Constructor</i></font>
+    Student(<b>const</b> <b>char</b> * login, <b>int</b> age, 
+            <b>int</b> year, <b>float</b> GPA);
+      <font color="#003399"><i>// Destructor</i></font>
+    ~Student();
+
+  <b>private</b>:
+    <b>char</b> *login_; <font color="#003399"><i>// dynamically allocated</i></font>
+    <b>int</b> age_;
+    <b>int</b> year_;
+    <b>float</b> GPA_;
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+<b>void</b> Student::set_login(<b>const</b> <b>char</b>* login)
+{
+    <font color="#003399"><i>// Delete &quot;old&quot; login</i></font>
+  <b>delete</b> [] login_;
+
+    <font color="#003399"><i>// Allocate new one</i></font>
+  <b>int</b> len = std::strlen(login);
+  login_ = <b>new</b> <b>char</b>[len + 1]; 
+  std::strcpy(login_, login);
+}
+
+Student::~Student()
+{
+  std::cout &lt;&lt; <font color="#9933CC">&quot;Student destructor for &quot;</font> 
+            &lt;&lt; login_ &lt;&lt; std::endl;
+  <b>delete</b> [] login_;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+
+Given the above "legal" code, this seemingly innocent code below is undefined and <i>may</i> 
+cause a crash:
+
+<blockquote><pre>
+<b>void</b> f6()
+{
+  Student john(<font color="#9933CC">&quot;john&quot;</font>, 20, 3, 3.10f);
+  Student billy(<font color="#9933CC">&quot;billy&quot;</font>, 21, 2, 3.05f);
+
+  billy = john; <font color="#003399"><i>// Assignment</i></font>
+}
+</pre></blockquote>
+
+<b>Output:</b>
+
+<blockquote><pre>
+Student constructor for john
+Student constructor for billy
+Student destructor for john
+Student destructor for ,o�a,o�a?
+  22292 [sig] a 2032 open_stackdumpfile: Dumping stack trace to a.exe.stackdump
+  22292 [sig] a 2032 open_stackdumpfile: Dumping stack trace to a.exe.stackdump
+ 742008 [sig] a 2032 E:\Data\Courses\Notes\CS170\Code\Classes3\a.exe: *** fatal error - 
+        E:\Data\Courses\Notes\CS170\Code\Classes3\a.exe: *** called with threadlist_ix -1
+</pre></blockquote>
+
+The output makes it obvious that there is a problem. On my 64-bit Linux system, I get 
+<a href="ShallowAssignmentCrash.html">this message</a>.
+<p>
+
+Here's a graphic of the problem:
+
+<blockquote>
+</blockquote>
+
+<a name="COPYDIAGRAM">
+<table border=0 cellspacing=5 cellpadding=5>
+<tr valign="top"><th>Incorrect assignment behavior (shallow copy)<br>(Default behavior)</th><th>Correct assignment behavior (deep copy)<br>(This is what we want)</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<img src="ShallowCopy-1.png">
+</pre></blockquote>
+</td>
+<td>
+<img src="DeepCopy-1.png">
+</td>
+</tr></table>
+</a>
+<p>
+	
+The diagram shows the painful truth: The default copy assignment operator won't cut it. Also, the default copy
+constructor will have the same problem, so this code will also fail:
+
+<blockquote><pre>
+Student john(<font color="#9933CC">&quot;john&quot;</font>, 20, 3, 3.10f);
+
+  <font color="#003399"><i>// Copy constructor</i></font>
+Student billy(john);
+</pre></blockquote>
+
+<!-- ************************************************************************************************ -->
+<!-- ************************************************************************************************ -->
+<p class="SectionHeader">A Proper Assignment Operator and Copy Constructor
+</p>
+
+Adding a copy assignment operator is no different than any other operator:
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Declaration</th><th>Implementation</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>class</b> Student           
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Constructor</i></font>
+    Student(<b>const</b> <b>char</b> * login, <b>int</b> age, 
+            <b>int</b> year, <b>float</b> GPA);
+
+      <font color="#003399"><i>// Explicit copy assignment operator</i></font>
+    Student&amp; <b>operator</b>=(<b>const</b> Student&amp; rhs);
+
+  <b>private</b>:
+      <font color="#003399"><i>// Private data</i></font>
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Student&amp; Student::<b>operator</b>=(<b>const</b> Student&amp; rhs)
+{
+  set_login(rhs.login_); <font color="#003399"><i>// This is important!</i></font>
+  set_age(rhs.age_);
+  set_year(rhs.year_);
+  set_GPA(rhs.GPA_);
+
+  <b>return</b> *<b>this</b>;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+<!--
+  std::cout &lt;&lt; <font color="#9933CC">&quot;Student operator= for &quot;</font> &lt;&lt; login_ &lt;&lt; std::endl;
+-->
+
+Remember that this is kind of what the default compiler-generated copy assignment operator looks like:
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Default copy assignment operator</th><th>Our correct and safe copy of login_</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+Student&amp; Student::<b>operator</b>=(<b>const</b> Student&amp; rhs)
+{
+  login_ = rhs.login_; <font color="#003399"><i>// This is big trouble!</i></font>
+  age_ = rhs.age_;
+  year_ = rhs.year_;
+  GPA_ = rhs.GPA_;
+
+  <b>return</b> *<b>this</b>;
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+<b>void</b> Student::set_login(<b>const</b> <b>char</b>* login)
+{
+    <font color="#003399"><i>// Delete &quot;old&quot; login</i></font>
+  <b>delete</b> [] login_;
+
+    <font color="#003399"><i>// Allocate new string</i></font>
+  <b>int</b> len = std::strlen(login);
+  login_ = <b>new</b> <b>char</b>[len + 1]; 
+  
+    <font color="#003399"><i>// Copy data</i></font>
+  std::strcpy(login_, login);
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+
+<blockquote><pre>
+</pre></blockquote>
+
+There is more work to be done. Many (if not all) new C++ programmers fall into this trap a lot:
+<p>
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Sample code</th><th>Output</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+  <font color="#003399"><i>// Construct a Student object</i></font>
+Student john(<font color="#9933CC">&quot;jdoe&quot;</font>, 20, 3, 3.10f);
+
+  <font color="#003399"><i>// Self-assignment (legal)</i></font>
+john = john;
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Student constructor for jdoe
+Error in age range!
+Error in year range!
+Student constructor for
+Student operator= for ,o�a,o�a?
+Student destructor for
+Student destructor for ,o�a,o�a?
+</pre></blockquote>
+</td>
+</tr></table>
+<p>
+An easy way to prevent this is to simply check first:
+
+<blockquote><pre>
+Student&amp; Student::<b>operator</b>=(<b>const</b> Student&amp; rhs)
+{
+    <font color="#003399"><i>// Check for self-assignment</i></font>
+  <b>if</b> (&amp;rhs != <b>this</b>)
+  {
+    set_login(rhs.login_);
+    set_age(rhs.age_);
+    set_year(rhs.year_);
+    set_GPA(rhs.GPA_);
+  }
+
+  <b>return</b> *<b>this</b>;
+}
+</pre></blockquote>
+
+There are other ways to prevent problems with self-assignment, but at this point, this is easier.
+<p>
+A similar problem exists with the default copy constructor:
+<p>
+
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Client code</th><th>Default copy constructor</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+  <font color="#003399"><i>// Construct a Student object</i></font>
+Student john(<font color="#9933CC">&quot;jdoe&quot;</font>, 20, 3, 3.10f);
+
+  <font color="#003399"><i>// Copy constructor</i></font>
+Student temp(john);
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Student::Student(<b>const</b> Student&amp; student) : login_(student.login_),  <font color="#003399"><i>// This is bad</i></font>
+                                           age_(student.age_),
+                                           year_(student.year_),
+                                           GPA_(student.GPA_)
+{
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+We need to write our own copy constructor to copy the object's data correctly:
+<p>
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Declaration</th><th>Implementation (almost correct)</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<b>class</b> Student           
+{
+  <b>public</b>:
+      <font color="#003399"><i>// Constructor</i></font>
+    Student(<b>const</b> <b>char</b> * login, <b>int</b> age, 
+            <b>int</b> year, <b>float</b> GPA);
+
+      <font color="#003399"><i>// Explicit copy constructor</i></font>
+    Student(<b>const</b> Student&amp; student);
+
+  <b>private</b>:
+      <font color="#003399"><i>// Private data</i></font>
+};
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+Student::Student(<b>const</b> Student&amp; student)
+{
+  set_login(student.login_); <font color="#003399"><i>// This is good</i></font>
+  set_age(student.age_);
+  set_year(student.year_);
+  set_GPA(student.GPA_);
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+
+
+<blockquote><pre>
+</pre></blockquote>
+
+Points:
+<ul>
+<li>The copy constructor looks very similar to the copy assignment operator.
+<li>However, they are working in very different ways:
+	<ol>
+	<li>Copy constructor - creates a brand new object where one <b>didn't exist before</b>
+	<li>Assignment operator - modifies the data of an <b>existing object</b>
+</ol>
+<li>If you have a lot of similar code in both functions, you should make a private method to help:
+	
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Private helper function</th><th>Calling the helper function</th></tr>
+<tr valign="top">
+<td>
+<blockquote><pre>
+<font color="#003399"><i>// Private copy method</i></font>
+<b>void</b> Student::copy_data(<b>const</b> Student& rhs)
+{
+  set_login(rhs.login_);
+  set_age(rhs.age_);
+  set_year(rhs.year_);
+  set_GPA(rhs.GPA_);
+}
+</pre></blockquote>
+</td>
+<td>
+<blockquote><pre>
+<font color="#003399"><i>// Constructor</i></font>
+<font color="#003399"><i>// Explicit copy constructor</i></font>
+Student::Student(<b>const</b> Student&amp; student)
+{
+  copy_data(student);
+}
+
+<font color="#003399"><i>// Explicit copy assignment operator</i></font>
+Student&amp; Student::<b>operator</b>=(<b>const</b> Student&amp; rhs)
+{
+    <font color="#003399"><i>// Check for self-assignment</i></font>
+  <b>if</b> (&amp;rhs != <b>this</b>)
+    copy_data(rhs);
+
+  <b>return</b> *<b>this</b>;
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+	
+<li>Why don't we check for "self-copying" in the copy constructor like we do in the copy assignment operator?
+<li>There is still a subtle deficiency (bug) in the constructor and copy constructor that isn't present in the 
+	copy assignment operator.
+<blockquote><pre>
+<b>void</b> Student::set_login(<b>const</b> <b>char</b>* login)
+{
+    <font color="#003399"><i>// Delete &quot;old&quot; login (THIS IS A POTENTIAL PROBLEM)</i></font>
+  <b>delete</b> [] login_;
+
+    <font color="#003399"><i>// Allocate new one</i></font>
+  <b>int</b> len = (<b>int</b>)std::strlen(login);
+  login_ = <b>new</b> <b>char</b>[len + 1]; 
+  std::strcpy(login_, login);
+}
+</pre></blockquote>
+
+The copy constructor calls this method:
+
+<blockquote><pre>
+<b>void</b> Student::copy_data(<b>const</b> Student& rhs)
+{
+    <font color="#003399"><i>// What is the value of login_ when the constructors call this method?</i></font>
+  set_login(rhs.login_); 
+  set_age(rhs.age_);
+  set_year(rhs.year_);
+  set_GPA(rhs.GPA_);
+}
+</pre></blockquote>
+
+<li>This is the proper way to implement the constructors for the Student class:
+<p>
+<table border=0 cellspacing=5 cellpadding=5>
+<tr><th>Initializing in the body</th><th>Using the member initializer list</th></tr>
+<tr valign="top">
+<td>
+<pre>
+<font color="#003399"><i>// Constructor</i></font>
+Student::Student(<b>const</b> <b>char</b> * login, 
+                 <b>int</b> age, <b>int</b> year, 
+                 <b>float</b> GPA)
+{
+  <font color="blue"><b>login_ = 0;</b></font>
+  set_login(login); 
+  set_age(age);
+  set_year(year);
+  set_GPA(GPA);
+}
+
+<font color="#003399"><i>// Explicit copy constructor</i></font>
+Student::Student(<b>const</b> Student&amp; student)
+{
+  <font color="blue"><b>login_ = 0;</b></font>
+  copy_data(student);
+}
+</pre>
+</td>
+<td>
+<blockquote><pre>
+<font color="#003399"><i>// Constructor</i></font>
+Student::Student(<b>const</b> <b>char</b> * login, <b>int</b> age, 
+                 <b>int</b> year, <b>float</b> GPA) <font color="blue"><b>: login_(0)</b></font>
+{
+  set_login(login); 
+  set_age(age);
+  set_year(year);
+  set_GPA(GPA);
+}
+
+
+
+<font color="#003399"><i>// Explicit copy constructor</i></font>
+Student::Student(<b>const</b> Student&amp; student) <font color="blue"><b>: login_(0)</b></font>
+{
+  copy_data(student);
+}
+</pre></blockquote>
+</td>
+</tr></table>
+
+</ul>
+
+<center>
+<table border=1 bgcolor="#e0ffff" cellpadding=10>
+<tr>
+<td>	
+As a rule, if you use <tt><b>new</b></tt> in your constructor, you will need to create
+<p>
+<ol>
+	<li>a destructor to free the memory.
+	<li>a copy constructor to perform a deep copy.
+	<li>a copy assignment operator to perform a deep copy (and also free the original memory).
+</ol>
+</td></tr></table>
+</center>
+</html>
