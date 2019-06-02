@@ -1,0 +1,40 @@
+GCC=g++
+GCCFLAGS1=-Wextra -ansi -pedantic -Wconversion -Werror -O2
+GCCFLAGS2=-Wall -Wextra -ansi -pedantic -Wconversion -Werror -g
+
+LFLAGS=
+
+OBJECTS0=List.cpp
+DRIVER0=driver.cpp
+
+VALGRIND_OPTIONS=--suppressions=/home/mmead/bin/false.supp -q --leak-check=full --show-reachable=yes --tool=memcheck
+DIFF_OPTIONS=-y --strip-trailing-cr --suppress-common-lines -b -W200
+
+OSTYPE := $(shell uname)
+ifeq ($(OSTYPE),Linux)
+CYGWIN=
+else
+CYGWIN=-Wl,--enable-auto-import
+endif
+
+clang:
+	clang++ -o $(PRG) $(CYGWIN) $(DRIVER0) $(OBJECTS0) $(GCCFLAGS1) $(LFLAGS)
+gcc1:
+	g++ -o $(PRG) $(CYGWIN) $(DRIVER0) $(OBJECTS0) $(GCCFLAGS1) $(LFLAGS)
+gcc2:
+	g++ -o $(PRG) $(CYGWIN) $(DRIVER0) $(OBJECTS0) $(GCCFLAGS2) $(LFLAGS)
+0:
+	echo "running test$@"
+	@echo "should run in less than 200 ms"
+	/home/mmead/bin/dos2unix --keepdate List.cpp
+	/home/mmead/bin/dos2unix --keepdate List.h
+	/home/mmead/bin/tablen List.cpp -v >>studentout$@
+	/home/mmead/bin/wd 5000 5000 valgrind $(VALGRIND_OPTIONS) 2> difference$@ ./$(PRG) > /dev/null
+	/home/mmead/bin/wd 1000 1000 ./$(PRG) >>studentout$@
+	diff output$@.txt studentout$@ $(DIFF_OPTIONS) >> difference$@
+	@echo "running valgrind for test$@"
+	( cat Doxyfile ; echo "EXTRACT_ALL=YES" ) | doxygen - 2>>difference$@
+	( cat Doxyfile ; echo "EXTRACT_ALL=NO" ) | doxygen - 2>>difference$@
+	/home/mmead/bin/checkdox-lab04.sh >>difference$@
+clean : 
+	rm *.exe student* difference*
