@@ -6,6 +6,9 @@
 		li {
 			line-height: 1.25;
 		}
+		table {
+			background-color: whitesmoke;
+		}
 		td {
 			border: 1pt;
 			border-style: dashed;
@@ -24,6 +27,12 @@
 			margin: 0;
 			padding-left: 12pt;
 		}
+		tr.offday {
+			background-color: #EEEEEE;
+		}
+		tr.offday > td:first-child {
+			font-size: small;
+		}
 	</style>
 </head>
 
@@ -33,7 +42,7 @@
 
 <table>
 
-	<thead><td style="min-width:60pt">Date</td><td>Lecture</td><td>Reading Reference</td><td style="min-width:64pt">Assigned</td><td style="min-width:64pt">Due</td></thead>
+	<thead style="position:sticky; top:0; background-color:white;"><td style="min-width:60pt">Date</td><td>Lecture</td><td>Reading Reference</td><td style="min-width:64pt">Assigned</td><td style="min-width:64pt">Due</td></thead>
 
 	<tr>
 		<td>May 6</td>
@@ -171,8 +180,8 @@
 		<td></td>
 	</tr>
 
-	<tr>
-		<td><small>June 12</small></td>
+	<tr class="offday">
+		<td>June 12</td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -181,7 +190,7 @@
 
 	<tr>
 		<td>June 14</td>
-		<td><b>Midterm Exam</b></td>
+		<td><span style="font-variant:small-caps"><b>Midterm Exam</b></span></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -201,8 +210,6 @@
 		</ul></td>
 	</tr>
 
-	<thead><td colspan="5" style="border-style:dotted">Upcoming <small><i>(Tentative Schedule)</i></small></td></thead>
-
 	<tr>
 		<td>June 21</td>
 		<td></td>
@@ -212,19 +219,119 @@
 	</tr>
 
 	<tr>
-		<td><small>June 25</small></td>
+		<td>June 24</td>
+		<td><ul>
+			<li><a href="https://www.vagrantup.com">Vagrant</a> with <a href="https://www.virtualbox.org">VirtualBox</a></li>
+			<li><a href="http://valgrind.org/docs/manual/mc-manual.html">memory checking with valgrind</a></li>
+			<li><a href="http://valgrind.org/docs/manual/cl-manual.html">performance checking with valgrind</a></li>
+		</ul></td>
+		<td></td>
+		<td><ul><li><a href="lab-7">lab 7</a></li></ul></td>
+		<td></td>
+	</tr>
+
+	<tr class="offday">
+		<td>June 25</td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td><ul><li><a href="lab-6">lab 6</a></li></ul></td>
 	</tr>
 
-	<tr>
-		<td><small>June 26</small></td>
+	<tr class="offday">
+		<td>June 26</td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td><ul><li><a href="project-3">project 3</a></li></ul></td>
+	</tr>
+
+	<tr>
+		<td>June 28</td>
+		<td><li><a href="https://www.youtube.com/watch?v=QM1iUe6IofM">Object-Oriented Programming is Bad</a></li></td>
+		<td></td>
+		<td><li><a href="project-4">project 4</a></li></td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<td>July 1</td>
+		<td><span style="font-variant:small-caps"><i>No Lecture</i></span></td>
+		<td></td>
+		<td><li><a href="lab-9"</li>lab 9</a></li></td>
+		<td></td>
+	</tr>
+
+	<thead><td colspan="5" style="border-style:dotted">Upcoming <small><i>(Tentative Schedule)</i></small></td></thead>
+
+	<tr>
+		<td>July 5</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><li><a href="lab-7"</li>lab 7</a></li></td>
+	</tr>
+
+	<tr>
+		<td>July 8</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr class="offday">
+		<td>July 9</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><li><a href="lab-9"</li>lab 9</a></li></td>
+	</tr>
+
+	<tr>
+		<td>July 12</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<td>July 15</td>
+		<td></td>
+		<td></td>
+		<td><ul>
+			<li>project 5</li>
+			<li>lab 10</li>
+		</ul></td>
+		<td><ul>
+			<li><a href="project-4"</li>project 4</a></li>
+			<li><a href="lab-9">lab 9</a></li>
+		</ul></td>
+	</tr>
+
+	<tr>
+		<td>July 19</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+
+	<tr class="offday">
+		<td>July 22</td>
+		<td><span style="font-variant:small-caps"><i>No Lecture</i></span></td>
+		<td></td>
+		<td></td>
+		<td><li>lab 10</li></td>
+	</tr>
+
+	<tr>
+		<td>July 26</td>
+		<td><span style="font-variant:small-caps;"><b>Final Exam</b></span></td>
+		<td></td>
+		<td></td>
+		<td><li>project 5</li></td>
 	</tr>
 
 </table>
