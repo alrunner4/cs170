@@ -1,573 +1,626 @@
 @media projection {
-
-.screenx {
-	display:none;
-	}
-
-.projectionx {
-	display: block; 
-	padding:65px 200px 0px 24px;
-	page-break-after: always;
-	}
-
-bodyx    {
-	background:#47557b url(operashowbg.jpg) fixed;
-	padding:0;
-	margin:0;
-	font-family:'trebuchet ms',arial,sans-serif;
-	font-size:150%;
-	color:#fff;
-	}
+    .screenx {
+        display: none;
+    }
+    .projectionx {
+        display: block;
+        padding: 65px 200px 0px 24px;
+        page-break-after: always;
+    }
+    bodyx {
+        background: #47557b url(operashowbg.jpg) fixed;
+        color: #fff;
+        font-family: 'trebuchet ms', arial, sans-serif;
+        font-size: 150%;
+        margin: 0;
+        padding: 0;
+    }
 }
-
 
 TD {
-   font-family : "Arial", "Helvetica", Sans-serif; 
+    font-family: "Arial", "Helvetica", Sans-serif;
 }
 
-
-.SectionHeader
-{
-  margin-left: 0;
-	font-size : 14pt;
-	font-weight : bold;
-  background-color: rgb(255,255,204);
-  border-style: solid;
-  border-color: black;
-  border-width: thin;
-	xvertical-align: top;
-	padding-top: 5px;
-	padding-bottom : 5px;
-	padding-left: 20px;
-	padding-right: 20px;
+.SectionHeader {
+    background-color: rgb(255, 255, 204);
+    border-color: black;
+    border-style: solid;
+    border-width: thin;
+    font-size: 14pt;
+    font-weight: bold;
+    margin-left: 0;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
 }
-
 
 PRE.SourceCode2 {
-   background-color : #e0ffff; 
-   border-width : medium; 
-   border-style : outset; 
-   border-color : silver; 
-   white-space : pre;
+    background-color: #e0ffff;
+    border-color: silver;
+    border-style: outset;
+    border-width: medium;
+    white-space: pre;
 }
 
 PRE.SourceCode EM {
-   font-style : normal; 
-   color : #9933cc; 
-   white-space : pre;  
+    color: #9933cc;
+    font-style: normal;
+    white-space: pre;
 }
 
 PRE.SourceCode {
-   font-family : "Courier", monospace; 
-   background-color : #ffffe0; 
-   margin-right : 20px; 
-   margin-left : 20px; 
-   padding : 5px 20px; 
-   border-width : medium; 
-   border-style : outset; 
-   border-color : silver; 
-   white-space : pre;  
+    background-color: #ffffe0;
+    border-color: silver;
+    border-style: outset;
+    border-width: medium;
+    font-family: "Courier", monospace;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px 20px;
+    white-space: pre;
 }
 
 P.chatuser {
-   font-weight : bold; 
-   color : #3366cc; 
-   vertical-align : top; 
+    color: #3366cc;
+    font-weight: bold;
+    vertical-align: top;
 }
 
 P.chatquestionpresented {
-   font-weight : bold; 
-   background-color : #dddddd; 
-   vertical-align : top; 
+    background-color: #dddddd;
+    font-weight: bold;
+    vertical-align: top;
 }
 
 P.chatpublicmsg {
-   font-weight : normal; 
-   vertical-align : top; 
-   padding : 0 0 20px; 
+    font-weight: normal;
+    padding: 0 0 20px;
+    vertical-align: top;
 }
 
 P.chateditor {
-   color : red; 
-   padding : 0 0 10px; 
+    color: red;
+    padding: 0 0 10px;
 }
 
 P.chataction {
-   font-style : italic; 
-   vertical-align : top; 
+    font-style: italic;
+    vertical-align: top;
 }
 
 P.TechNote {
-   font-weight : normal; 
-   background-color : #e0ffff; 
-   padding : 2px 5px; 
-   border-width : medium; 
-   border-style : outset; 
-   border-color : silver; 
+    background-color: #e0ffff;
+    border-color: silver;
+    border-style: outset;
+    border-width: medium;
+    font-weight: normal;
+    padding: 2px 5px;
 }
 
 H3 {
-   font-weight : bold; 
-   font-size : 11pt; 
-   line-height : 10pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 11pt;
+    font-weight: bold;
+    line-height: 10pt;
+    text-decoration: none;
 }
 
 H2 {
-   font-weight : bold; 
-   font-size : 14pt; 
-   line-height : 14pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    line-height: 14pt;
+    text-decoration: none;
 }
 
 H1 {
-   font-weight : bold; 
-   font-size : 18pt; 
-   line-height : 18pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
-   padding : 10px 0 0; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+    line-height: 18pt;
+    padding: 10px 0 0;
+    text-decoration: none;
 }
 
 BODY {
-   background : #ffffff; 
-   margin-left : 20 px;
-   margin-right : 20 px;}
+    background: #ffffff;
+    margin-left: 20 px;
+    margin-right: 20 px;
+}
 
 B.Help {
-   color : white; 
-   background-color : gray; 
+    background-color: gray;
+    color: white;
 }
 
 A:hover {
-   color : #cc3300; 
+    color: #cc3300;
 }
 
 .webDirectoryLink {
-   font-size : 0.8em; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #3366cc; 
-   text-decoration : underline; 
+    color: #3366cc;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 0.8em;
+    text-decoration: underline;
 }
 
 .webDirectoryCategoryLink {
-   font-size : 0.8em; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 0.8em;
+    text-decoration: none;
 }
 
 .webDirectoryCatHead {
-   font-size : 0.9em; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #ffffff; 
-   text-decoration : none; 
+    color: #ffffff;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 0.9em;
+    text-decoration: none;
 }
 
 .vspace5 {
-   padding : 5px 0 0; 
+    padding: 5px 0 0;
 }
 
 .visibility {
-   font-weight : bold; 
-   font-size : 0.8em; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #ff0000; 
-   text-decoration : none; 
+    color: #ff0000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .tuser {
-   color : blue; 
-   background-color : white; 
+    background-color: white;
+    color: blue;
 }
 
 .ttitle {
-   font-weight : bold; 
-   color : black; 
-   background-color : #dddddd; 
+    background-color: #dddddd;
+    color: black;
+    font-weight: bold;
 }
 
 .tthis {
-   font-weight : bold; 
-   line-height : 1; 
-   color : white; 
-   background-color : red; 
-   vertical-align : top; 
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    line-height: 1;
+    vertical-align: top;
 }
 
 .tother {
-   font-weight : bold; 
-   line-height : 1; 
-   color : white; 
-   background-color : blue; 
-   vertical-align : top; 
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    line-height: 1;
+    vertical-align: top;
 }
 
 .tmine {
-   font-weight : bold; 
-   color : black; 
-   background-color : #c71585; 
+    background-color: #c71585;
+    color: black;
+    font-weight: bold;
 }
 
 .title3 {
-   font-weight : bold; 
-   font-size : 12pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .thi {
-   background-color : #dddddd; 
+    background-color: #dddddd;
 }
 
 .textAdLink {
-   font-weight : bold; 
-   color : #ffffff; 
-   text-decoration : none; 
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .textAdCell {
-   font-size : 0.8em; 
+    font-size: 0.8em;
 }
 
 .searchCell {
-   font-weight : bold; 
-   font-size : 11px; 
+    font-size: 11px;
+    font-weight: bold;
 }
 
 .rightSidebarLink {
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    text-decoration: none;
 }
 
 .rightSidebarHeading {
-   font-weight : bold; 
-   font-size : 10pt; 
-   color : #ffffff; 
-   background : #3366cc; 
+    background: #3366cc;
+    color: #ffffff;
+    font-size: 10pt;
+    font-weight: bold;
 }
 
 .rightSidebarCell {
-   font-weight : bold; 
-   font-size : 10pt; 
-   color : #000000; 
-   background : #dddddd; 
+    background: #dddddd;
+    color: #000000;
+    font-size: 10pt;
+    font-weight: bold;
 }
 
 .presentLocation {
-   font-weight : bold; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .logoCell {
-   background : #000000; 
+    background: #000000;
 }
 
 .logoBar {
-   background : #000000; 
+    background: #000000;
 }
 
 .loginLinkCell {
-   font-weight : bold; 
-   font-size : 0.8em; 
-   background : #3366cc; 
+    background: #3366cc;
+    font-size: 0.8em;
+    font-weight: bold;
 }
 
 .loginLink {
-   color : #ffffff; 
-   text-decoration : none; 
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .loginStd {
-   text-align : right; 
+    text-align: right;
 }
 
 .loginReq {
-   text-align : right; 
-   font-weight : bold; 
-   color : blue; 
+    color: blue;
+    font-weight: bold;
+    text-align: right;
 }
 
 .login_std {
-   text-align : right; 
+    text-align: right;
 }
 
 .login_req {
-   text-align : right; 
-   font-weight : bold; 
-   color : blue; 
+    color: blue;
+    font-weight: bold;
+    text-align: right;
 }
 
 .locationLink {
-   color : #000000; 
-   text-decoration : underline; 
+    color: #000000;
+    text-decoration: underline;
 }
 
 .localLinkCell {
-   font-size : 9pt; 
-   color : #ffffff; 
-   background : #3366cc; 
+    background: #3366cc;
+    color: #ffffff;
+    font-size: 9pt;
 }
 
 .localLink {
-   font-weight : bold; 
-   color : #ffffff; 
-   text-decoration : none; 
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .leftSidebarText {
-   font-weight : normal; 
-   font-size : 9pt; 
-   color : #000000; 
+    color: #000000;
+    font-size: 9pt;
+    font-weight: normal;
 }
 
 .leftSidebarLink {
-   font-weight : bold; 
-   font-size : 10pt; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-size: 10pt;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .leftSidebarHeading {
-   font-weight : bold; 
-   font-size : 12pt; 
-   color : #3366cc; 
+    color: #3366cc;
+    font-size: 12pt;
+    font-weight: bold;
 }
 
 .leftSidebarCell {
-   font-size : 0.8em; 
-   background : #dddddd; 
+    background: #dddddd;
+    font-size: 0.8em;
 }
 
 .heading3 {
-   font-weight : bold; 
-   font-size : 11pt; 
-   line-height : 10pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 11pt;
+    font-weight: bold;
+    line-height: 10pt;
+    text-decoration: none;
 }
 
 .heading2 {
-   font-weight : bold; 
-   font-size : 14pt; 
-   line-height : 14pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    line-height: 14pt;
+    text-decoration: none;
 }
 
 .heading1 {
-   font-weight : bold; 
-   font-size : 18pt; 
-   line-height : 18pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
-   padding : 10px 0 0; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+    line-height: 18pt;
+    padding: 10px 0 0;
+    text-decoration: none;
 }
 
 .globalNavBar {
-   background : #dddddd; 
+    background: #dddddd;
 }
 
 .globalLinkCell {
-   font-size : 0.8em; 
-   background : #dddddd; 
+    background: #dddddd;
+    font-size: 0.8em;
 }
 
 .globalLink {
-   font-weight : bold; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .fineprint {
-   font-weight : normal; 
-   font-size : 8pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none;
 }
 
 .directoryStuff {
-   font-size : 0.8em; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 0.8em;
 }
 
 .directoryLink {
-   font-size : 9pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 9pt;
+    text-decoration: none;
 }
 
 .directoryCategory {
-   font-size : 10pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : underline; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 10pt;
+    text-decoration: underline;
 }
 
 .date3 {
-   font-weight : normal; 
-   font-size : 9pt; 
-   line-height : 10pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
-   margin-top : 3pt; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 9pt;
+    font-weight: normal;
+    line-height: 10pt;
+    margin-top: 3pt;
+    text-decoration: none;
 }
 
 .copyrightLink {
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    text-decoration: none;
 }
 
 .copyrightCell {
-   font-size : 7pt; 
-   background : #dddddd; 
+    background: #dddddd;
+    font-size: 7pt;
 }
 
 .contentshortDescription {
-   font-weight : normal; 
-   font-size : 9pt; 
-   color : #000000; 
+    color: #000000;
+    font-size: 9pt;
+    font-weight: normal;
 }
 
 .contentTableCell {
-   font-size : 0.8em; 
-   background : #ffffff; 
+    background: #ffffff;
+    font-size: 0.8em;
 }
 
 .contentTable {
-   background : #ffffff; 
+    background: #ffffff;
 }
 
 .contentStoryLink {
-   color : #3366cc; 
+    color: #3366cc;
 }
 
 .contentStoryHeadingCell {
-   background : #dddddd; 
+    background: #dddddd;
 }
 
 .contentStoryHeading {
-   font-weight : normal; 
-   font-size : 11pt; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-size: 11pt;
+    font-weight: normal;
+    text-decoration: none;
 }
 
 .contentStoryByline {
-   font-style : italic; 
-   font-weight : normal; 
-   font-size : 9pt; 
-   color : #000000; 
+    color: #000000;
+    font-size: 9pt;
+    font-style: italic;
+    font-weight: normal;
 }
 
 .contentSectionHeading {
-   font-weight : bold; 
-   font-size : 12pt; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-size: 12pt;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .contentRule {
-   background : #3366cc; 
+    background: #3366cc;
 }
 
 .contentMoreLink {
-   font-weight : bold; 
-   color : #3366cc; 
+    color: #3366cc;
+    font-weight: bold;
 }
 
 .contentHat {
-   font-weight : bold; 
-   font-size : 10pt; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-size: 10pt;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .contentDevNewsStoryHeading {
-   font-weight : normal; 
-   font-size : 10pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    text-decoration: none;
 }
 
 .contentArticleTypeIndex {
-   font-size : 0.7em; 
-   color : #3366cc; 
+    color: #3366cc;
+    font-size: 0.7em;
 }
 
 .bottomlink {
-   font-weight : normal; 
-   font-size : 10pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #3366cc; 
-   text-decoration : none; 
+    color: #3366cc;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    text-decoration: none;
 }
 
 .body3 {
-   font-weight : normal; 
-   font-size : 10pt; 
-   line-height : 11pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    line-height: 11pt;
+    text-decoration: none;
 }
 
 .blueHeading2 {
-   font-weight : bold; 
-   font-size : 12pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #003399; 
-   text-decoration : none; 
+    color: #003399;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .bigBlue {
-   font-weight : bold; 
-   font-size : 14pt; 
-   color : #013399; 
-   text-decoration : none; 
+    color: #013399;
+    font-size: 14pt;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .abstract {
-   font-style : italic; 
-   font-weight : normal; 
-   font-size : 10pt; 
-   line-height : 11pt; 
-   font-family : "Arial", "Helvetica", Sans-serif; 
-   color : #000000; 
-   text-decoration : none; 
-   padding : 10px; 
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 10pt;
+    font-style: italic;
+    font-weight: normal;
+    line-height: 11pt;
+    padding: 10px;
+    text-decoration: none;
 }
+
+
 /* new classes - added 01/11/01 rare medium */
 
-.whiteLink { font-size : 10pt; text-decoration : none; color : #ffffff; }
+.whiteLink {
+    color: #ffffff;
+    font-size: 10pt;
+    text-decoration: none;
+}
 
-.whiteLinkB { font-size : 10pt; font-weight : bold; text-decoration : none; color : #ffffff; }
+.whiteLinkB {
+    color: #ffffff;
+    font-size: 10pt;
+    font-weight: bold;
+    text-decoration: none;
+}
 
-.whiteLinkSmall { font-size : 9pt; text-decoration : none; color : #ffffff; }
-.yellowLinkSmall { font-size : 9pt; font-weight : bold; text-decoration : none; color : #ffdf00; }
-.whiteLinkVerySmall { font-size : 8pt; text-decoration : none; color : #ffffff; }
+.whiteLinkSmall {
+    color: #ffffff;
+    font-size: 9pt;
+    text-decoration: none;
+}
 
-.newBody { font-weight : normal; font-size : 9pt; line-height : 11pt; font-family : "Arial", "Helvetica", Sans-serif; color : #000000; text-decoration : none; }
+.yellowLinkSmall {
+    color: #ffdf00;
+    font-size: 9pt;
+    font-weight: bold;
+    text-decoration: none;
+}
 
-.newTitle { font-weight : bold; font-size : 11pt; font-family : "Arial", "Helvetica", Sans-serif; color : #000000; text-decoration : none; }
+.whiteLinkVerySmall {
+    color: #ffffff;
+    font-size: 8pt;
+    text-decoration: none;
+}
 
-.newDate { font-weight : normal; font-size : 8pt; line-height : 10pt; font-family : "Arial", "Helvetica", Sans-serif; color : #000000; text-decoration : none; margin-top : 3pt; }
+.newBody {
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 9pt;
+    font-weight: normal;
+    line-height: 11pt;
+    text-decoration: none;
+}
 
-.newHeading { font-weight : bold; font-size : 10pt; line-height : 10pt; font-family : "Arial", "Helvetica", Sans-serif; color : #000000; text-decoration : none; }
+.newTitle {
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 11pt;
+    font-weight: bold;
+    text-decoration: none;
+}
 
-.bigBlack { font-weight : bold; font-size : 14pt; font-family : "Arial", "Helvetica", Sans-serif; color : #000000; text-decoration : none; }
+.newDate {
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    line-height: 10pt;
+    margin-top: 3pt;
+    text-decoration: none;
+}
+
+.newHeading {
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    line-height: 10pt;
+    text-decoration: none;
+}
+
+.bigBlack {
+    color: #000000;
+    font-family: "Arial", "Helvetica", Sans-serif;
+    font-size: 14pt;
+    font-weight: bold;
+    text-decoration: none;
+}
