@@ -1,6 +1,6 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="../new.css">
+<link rel="stylesheet" type="text/css" href="../notes/new.css">
 <title>CS 170 - Programming Assignment #2</title>
 </head>
 
@@ -42,25 +42,27 @@ Information
 </p>
 
 <table border=0>
-<tr><td><ximg src="../../../../../images/annew3.gif" width="60" height="30"></td>
+<tr>
 <td>
 <p class="technote">
-<b>Observations:</b> Many students are forgetting that arrays in C/C++ are zero-based, meaning, if
-you have an array of 5 boats, you'd better only index that array with 0 through 4. Students are indexing that array using the
-BoatID (1 through 5), which is the cause of 99.9% of the problems. Remember, <b>overwriting an array means your program is undefined (broken)</b>, which
-(unfortunately) usually means it will work for you on your machine with simple tests, but won't work for me when I test it. The same is true
-when doing bounds-checking to see if the boat or shot is outside of the array (ocean).
-So, please, please, please pay attention to the
-details when indexing an array. 
-<br><br>
-The sample driver is just that, a sample. Just because you pass all of the tests in that simple driver doesn't necessarily mean your code is perfect.
-Several people had incorrect output or crashes because they failed to check the coordinates of the boats or shots correctly. The problem is that they
-failed to check if the coordinates were negative. They were checking that the coordinates were less than the x and y dimensions, but they didn't 
-check to make sure the coordinates weren't less than 0. Many students failed to do this. Double-check your checks!
+Many students forget that arrays in C/C++ are zero-based, meaning that if you have an array of 5
+boats, you'd better only index that array with 0 through 4. Remember,
+<b>writing beyond the end of an array means your program is undefined (broken)</b>,
+which (unfortunately) often means it will work for you on your machine with simple tests, but won't
+work for me when I test it. The same is true when doing bounds-checking to see if the boat or shot
+is outside of the array (ocean). So, please, please, please pay attention to the details when
+indexing an array.
+<br>
+<br>
+The sample driver is just that: a sample. Just because you pass all of the tests in that simple driver doesn't necessarily mean your code is perfect.
+You may get incorrect output or crashes if you have failed to check the coordinates of the boats or shots correctly.
+One problem could be failure to check if the coordinates were negative.
+If you check that the coordinates are less than the x and y dimensions, but not that the coordinates weren't less than 0, you'll access memory outside the array.
+Many students fail to do this. Double-check your checks!
 </p>
-
 </td>
-</tr></table>	
+</tr>
+</table>	
 
 
 <ul>
